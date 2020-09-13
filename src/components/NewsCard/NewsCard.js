@@ -13,14 +13,18 @@ import {
   Typography,
 } from "@material-ui/core";
 
+import useStyles from "./styles.js";
+
 const NewsCard = ({
   article: { description, publishedAt, source, title, url, urlToImage },
   i,
 }) => {
+  const classes = useStyles();
   return (
     <Card>
       <CardActionArea>
         <CardMedia
+          className={classes.media}
           image={
             urlToImage ||
             "https://www.upstart.net.au/wp-content/uploads/2019/09/abc-news-og-data-1.jpg"
@@ -44,7 +48,9 @@ const NewsCard = ({
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary"></Button>
+        <Button size="small" color="primary">
+          Learn More
+        </Button>
         <Typography variant="h5" color="textSecondary">
           {i + 1}
         </Typography>

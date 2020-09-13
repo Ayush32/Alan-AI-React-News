@@ -5,7 +5,7 @@
 import React from "react";
 import { Grid, Grow, Typography } from "@material-ui/core";
 import NewsCard from "../NewsCard/NewsCard";
-import useStyles from "./style.js";
+import useStyles from "./styles.js";
 
 const NewsCards = ({ articles }) => {
   const classes = useStyles();
