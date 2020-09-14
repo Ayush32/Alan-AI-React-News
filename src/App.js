@@ -2,8 +2,9 @@
  *   Copyright (c) 2020
  *   All rights reserved.
  */
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect } from "react";
 import alanBtn from "@alan-ai/alan-sdk-web";
+import wordsToNumbers from "words-to-numbers";
 import NewsCards from "./components/NewsCards/NewsCards";
 import useStyles from "./styles.js";
 
@@ -18,12 +19,24 @@ const App = () => {
   useEffect(() => {
     alanBtn({
       key: alanKey,
-      onCommand: ({ command, articles }) => {
+      onCommand: ({ command, articles, number }) => {
         if (command === "newHeadlines") {
           setNewsArticles(articles);
           setActiveArticle(-1);
         } else if (command === "highlight") {
           setActiveArticle((preActiveArticle) => preActiveArticle + 1);
+        } else if (command === "open") {
+          const parsedNumber =
+            number.length > 2
+              ? wordsToNumbers(number, { fuzzy: true })
+              : number;
+          const article = articles[parsedNumber - 1];
+          if (parsedNumber > 20) {
+            alanBtn().playText("Please Try again");
+          } else if (article) {
+            window.open(article.url, "_blank");
+            alanBtn().playText("Opening...");
+          }
         }
       },
     });
